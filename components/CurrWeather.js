@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Icons from '@expo/vector-icons/Ionicons';
 import { Feather } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome6 } from '@expo/vector-icons';
 
-export default function CurrWeather () {
+export default function CurrWeather ({weatherData}) {
+
+    const [isLoading, setIsLoading] = useState(true);
+    const [location, setLocation] = useState({lat: 0, long: 0});
+
+    //todo: fetch weather by location in useeffect,
+    //      render error handling if loc not available
+    //      fix variables, so they work even if weatherData is null
+    //      Math.round(weatherData.main.temp-273.15)
+    //      api key to env 
+    //      proper error handling
+    //      forecast page, need another fetch for that
+    //      fix currweather first!
+
+    useEffect(() => {
+        // fetch first data on with gps
+
+        
+    }, []) ;
 
     const cityName = "Tampere";
     const temp = 3;
@@ -16,12 +34,13 @@ export default function CurrWeather () {
     const sunSet = "16:12";
     const maxTemp = 4;
     const minTemp = -4;
+    
 
     return(
         <View style={styles.wrapper}>
             <View style={styles.top_row}>
                 <Text style={styles.sää_nyt}>Sää nyt</Text>
-                <Text style={styles.city_name}>{cityName}</Text>
+                <Text style={styles.city_name}>{weatherData.name}</Text>
             </View>
             <View style={styles.middle_row}>
                 <View style={styles.left_and_right}>
@@ -93,6 +112,7 @@ const styles = StyleSheet.create({
     {
         flexDirection: 'row',
         justifyContent: 'center',
+        marginBottom: 30
     },
     middle_row_item: 
     {

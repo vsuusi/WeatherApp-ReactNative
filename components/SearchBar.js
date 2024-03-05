@@ -1,20 +1,36 @@
 import React, { useState } from "react";
-import { Text, 
+import {
   TextInput, 
   View, 
   Platform, 
   StyleSheet, 
-  KeyboardAvoidingView, 
-  TouchableWithoutFeedback, 
-  Alert, 
+  KeyboardAvoidingView,
   Pressable
  } from "react-native";
 import Icons from '@expo/vector-icons/Ionicons';
 
-export default function SearchBar() {
+// import { API_KEY } from '@env'; FIX
+API_KEY = "8f570fd5f0dbc9bba4e6f9fd7b625dd5";
 
-  const [city, setCity] = React.useState("");
-  const btn = "title";
+
+export default function SearchBar({fromSearchToHome}) {
+
+  const [cityInput, setCityInput] = useState("");
+
+  const fetchCity = async (city) => {
+    try {
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch city');
+      }
+      const data = await response.json();
+      console.log(data.weather[0].main);
+      fromSearchToHome(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
 
   return(
     <>
@@ -27,14 +43,14 @@ export default function SearchBar() {
           <View style={styles.wrapper}>
             <TextInput
               style={styles.input}
-              onChangeText={setCity}
-              value={city}
+              onChangeText={setCityInput}
+              value={cityInput}
               placeholder="City search"
               mode="outlined"
               />
             <Pressable 
               style={styles.button} 
-              onPress={() => Alert.alert('Simple Button pressed')}> 
+              onPress={() => fetchCity(cityInput)}> 
               <Icons name="search" size={40} color={"black"}/>
             </Pressable>
           </View>

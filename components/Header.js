@@ -4,7 +4,7 @@ import { Text, View, StyleSheet } from "react-native";
 export default function Header() {
     return (
         <View style={styles.headerContainer}>
-            <Text style={styles.headerFont}>M-weather</Text>
+            <Text style={styles.headerFont}>Myrpen sääsovellus</Text>
         </View>
     );
 };
