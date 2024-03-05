@@ -1,6 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import BottomNavBar from './components/BottomNavBar';
+import Header from './components/Header';
 
 /* 
   - web palvelu/REST api
@@ -12,30 +16,18 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
   return (
-    <>
-      <View style={styles.container}>
-        <Text>Halojatahalloo</Text>
-        <StatusBar style="auto" />
-      </View>
-      <View style={styles.container2}>
-        <Text>Halojatahalloo</Text>
-        <StatusBar style="auto" />
-      </View>
-    </>
+      <NavigationContainer>
+        <Header/>
+        <BottomNavBar/>
+      </NavigationContainer>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ff0',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  container2: {
-    flex: 1,
-    backgroundColor: '#f0f',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  }
 });
