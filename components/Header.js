@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 
 export default function Header() {
+
     return (
         <View style={styles.headerContainer}>
             <Text style={styles.headerFont}>Myrpen sääsovellus</Text>
@@ -18,9 +19,8 @@ const styles = StyleSheet.create({
       paddingBottom: 20
     },
     headerFont: {
-        fontSize: 26,
-        fontStyle: 'italic',
-        fontWeight: 'bold',
+        fontSize: 30,
+        fontFamily: 'LobsterRegular',
         color: '#fff',
     }
   });

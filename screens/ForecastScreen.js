@@ -28,7 +28,7 @@ export default function ForecastScreen() {
     
 
     const formatDate = (dateString) => {
-        const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const daysOfWeek = ['Sunnuntai', 'Maanantai', 'Tiistai', 'Keskiviikko', 'Torstai', 'Perjantai', 'Lauantai'];
         const date = new Date(dateString);
         const weekdayIndex = date.getDay();
         const weekday = daysOfWeek[weekdayIndex];
@@ -61,7 +61,7 @@ export default function ForecastScreen() {
                         </Text>
                         <Text style={{fontSize: 20}}>
                             <Feather name="wind" size={20} color="black"/>
-                            {item.wind.speed}m/s
+                            {item.wind.speed} m/s
                         </Text>
                     </View>
                 </View>
