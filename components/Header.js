@@ -1,7 +1,16 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
+import {  useFonts, Kalam_400Regular } from '@expo-google-fonts/kalam';
 
 export default function Header() {
+
+    let [fontsLoaded] = useFonts({
+        Kalam_400Regular,
+    });
+
+    if (!fontsLoaded) {
+    return null;
+    }
 
     return (
         <View style={styles.headerContainer}>
@@ -14,13 +23,13 @@ const styles = StyleSheet.create({
     headerContainer: {
       backgroundColor: '#262323',
       justifyContent: 'center',
-      paddingTop: 55,
-      paddingLeft: 30,
-      paddingBottom: 20
+      paddingTop: 50,
+      paddingBottom: 10
     },
     headerFont: {
         fontSize: 30,
-        fontFamily: 'LobsterRegular',
+        fontFamily: 'Kalam_400Regular',
         color: '#fff',
+        textAlign: 'center'
     }
   });
