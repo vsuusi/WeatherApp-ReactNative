@@ -56,7 +56,7 @@ export default function CurrWeather ({weatherData}) {
 
         const fetchLocCity = async (lat,long) => {
             try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=8f570fd5f0dbc9bba4e6f9fd7b625dd5`);
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${process.env.API_KEY}`);
                 if (!response.ok) {
                   throw new Error('Failed to fetch gps city');
                 }

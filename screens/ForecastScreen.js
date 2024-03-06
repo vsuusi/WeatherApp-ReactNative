@@ -6,12 +6,12 @@ import { Feather, FontAwesome6 } from '@expo/vector-icons';
 export default function ForecastScreen() {
 
     const { coords } = useWeatherContext();
-    const [forecastData, setForecastData] = useState(null); // cannot conver to obj
+    const [forecastData, setForecastData] = useState(null); 
 
     useEffect(() =>{
         const fetchForecast = async (lat,lon) => {
             try {
-                const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=8f570fd5f0dbc9bba4e6f9fd7b625dd5`)
+                const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}`)
                 if (!response.ok) {
                     throw new Error('Failed to fetch forecast');
                 }
@@ -21,7 +21,9 @@ export default function ForecastScreen() {
                 console.error(error);
             }
         }
-        fetchForecast(coords[0],coords[1])
+        if (coords && coords.length > 1) {
+            fetchForecast(coords[0], coords[1]);
+        }
     }, [coords]);
     
 
@@ -69,10 +71,13 @@ export default function ForecastScreen() {
     )
 
     if (!forecastData) {
-        return <Text style={{fontSize: 32,
-                             textAlign: 'center',
-                             justifyContent: 'center'}}>
-                                Loading...</Text>;
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text style={{ fontSize: 32, textAlign: 'center' }}>
+                    Loading...
+                </Text>
+            </View>
+        );
     }
     
 
