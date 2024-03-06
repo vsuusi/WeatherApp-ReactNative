@@ -15,3 +15,9 @@ Openweathermap.com version 2.5. Query current weather by city and forecast by co
 - Clone repo
 - run `npx expo` from root of directory
 - Scan the QR code from terminal with Expo Go (Android) or the Camera app (iOS)
+
+### Use case
+<p align="center">
+    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/tree/master/assets/screenshots/1.png" alt="Screenshot 1" width="250"/>
+    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/tree/master/assets/screenshots/2.png" alt="Screenshot 2" width="250"/>
+</p>
