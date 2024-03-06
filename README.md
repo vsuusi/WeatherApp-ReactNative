@@ -18,6 +18,6 @@ Openweathermap.com version 2.5. Query current weather by city and forecast by co
 
 ### Use case
 <p align="center">
-    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/tree/master/assets/screenshots/1.png" alt="Screenshot 1" width="250"/>
-    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/tree/master/assets/screenshots/2.png" alt="Screenshot 2" width="250"/>
+    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/blob/master/assets/screenshots/1.png" alt="Screenshot 1" width="250"/>
+    <img src="https://github.com/vsuusi/WeatherApp-ReactNative/blob/master/assets/screenshots/2.png" alt="Screenshot 2" width="250"/>
 </p>
