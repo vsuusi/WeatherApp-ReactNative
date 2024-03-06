@@ -5,6 +5,7 @@ import {
   Platform, 
   StyleSheet, 
   KeyboardAvoidingView,
+  Keyboard,
   Pressable
  } from "react-native";
 import Icons from '@expo/vector-icons/Ionicons';
@@ -24,8 +25,8 @@ export default function SearchBar({fromSearchToHome}) {
         throw new Error('Failed to fetch city');
       }
       const data = await response.json();
-      console.log(data.weather[0].main);
       fromSearchToHome(data);
+      Keyboard.dismiss();
     } catch (error) {
       console.error(error);
     }

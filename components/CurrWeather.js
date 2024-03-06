@@ -1,44 +1,41 @@
 import React, { useState, useEffect } from "react";
+import { useWeatherContext } from "./BottomNavBar";
 import { Text, View, StyleSheet, Image } from "react-native";
-import Icons from '@expo/vector-icons/Ionicons';
-import { Feather } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
+import { Feather, FontAwesome6 } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 
 export default function CurrWeather ({weatherData}) {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [location, setLocation] = useState({lat: 0, long: 0});
-    const [data, setData] = useState({
-        cityName: "alkudata",
-        temp: 0,
-        windSpeed: 0,
-        desc: "",
-        humidity: 0,
-        sunRise: "0",
-        sunSet: "0",
-        maxTemp: 0,
-        minTemp: 0,
-        icon: "",
-    });
+    const [data, setData] = useState(null);
+    const { updateCoords } = useWeatherContext();
 
     const formatTime = (timestamp) => {
-        const lastFourDigits = String(timestamp).substring(6); // Extract last four digits
-        const hours = lastFourDigits.substring(0, 2); // Extract hours
-        const minutes = lastFourDigits.substring(2); // Extract minutes
+        const date = new Date(timestamp * 1000);
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        hours = hours < 10 ? '0' + hours : hours.toString();
+        minutes = minutes < 10 ? '0' + minutes : minutes.toString();
         return `${hours}:${minutes}`;
-    }
+    };
 
-    
-    //todo: fetch weather by location in useeffect,
-    //      render error handling if loc not available
-    //      fix variables, so they work even if weatherData is null
-    //      Math.round(weatherData.main.temp-273.15)
-    //      api key to env 
-    //      proper error handling
-    //      forecast page, need another fetch for that
-    //      fix currweather first!
-    //      to run: npx expo
+    useEffect(() => {
+        if (weatherData) {
+            setData({
+                cityName: weatherData.name,
+                temp: Math.round(weatherData.main.temp - 273.15),
+                windSpeed: weatherData.wind.speed,
+                desc: weatherData.weather[0].description,
+                humidity: weatherData.main.humidity,
+                sunRise: formatTime(weatherData.sys.sunrise),
+                sunSet: formatTime(weatherData.sys.sunset),
+                maxTemp: Math.round(weatherData.main.temp_max - 273.15),
+                minTemp: Math.round(weatherData.main.temp_min - 273.15),
+                icon: weatherData.weather[0].icon
+            });
+            updateCoords([weatherData.coord.lat, weatherData.coord.lon, weatherData.name]);
+        }
+    }, [weatherData]);
 
     useEffect(() => {
         const getLocation = async () => {
@@ -49,7 +46,6 @@ export default function CurrWeather ({weatherData}) {
                     return;
                 }
                 var loc = await Location.getCurrentPositionAsync({});
-                setLocation({ lat: loc.coords.latitude, long: loc.coords.longitude });
                 await fetchLocCity(loc.coords.latitude, loc.coords.longitude);
             } catch (error) {
                 console.error("Error fetching location:", error);
@@ -64,33 +60,33 @@ export default function CurrWeather ({weatherData}) {
                 if (!response.ok) {
                   throw new Error('Failed to fetch gps city');
                 }
-                const data = await response.json();
+                const wdata = await response.json();
                 setData({
-                    cityName: data.name,
-                    temp: Math.round(data.main.temp - 273.15),
-                    windSpeed: data.wind.speed,
-                    desc: data.weather[0].description,
-                    humidity: data.main.humidity,
-                    sunRise: formatTime(data.sys.sunrise),
-                    sunSet: formatTime(data.sys.sunset),
-                    maxTemp: Math.round(data.main.temp_max - 273.15),
-                    minTemp: Math.round(data.main.temp_min - 273.15),
-                    icon: data.weather[0].icon
+                    cityName: wdata.name,
+                    temp: Math.round(wdata.main.temp - 273.15),
+                    windSpeed: wdata.wind.speed,
+                    desc: wdata.weather[0].description,
+                    humidity: wdata.main.humidity,
+                    sunRise: formatTime(wdata.sys.sunrise),
+                    sunSet: formatTime(wdata.sys.sunset),
+                    maxTemp: Math.round(wdata.main.temp_max - 273.15),
+                    minTemp: Math.round(wdata.main.temp_min - 273.15),
+                    icon: wdata.weather[0].icon
                 });
                 setIsLoading(false);
+                updateCoords([wdata.coord.lat, wdata.coord.lon, wdata.name]);
               } catch (error) {
-                console.error("error fetching gps city", error);
+                console.error("error fetching city by gps", error);
               }
         };
-
-    }, []) ;
+    }, []);
 
     if (isLoading) {
         return(
             <View style={styles.wrapper}>
                 <Text style={styles.loaderText}>
                     Hang on tight, {"\n"}
-                    Fetching weather for your current location
+                    Fetching weather for your current location...
                 </Text>
             </View>
         )
